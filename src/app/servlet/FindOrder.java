@@ -14,17 +14,27 @@ import java.io.IOException;
  */
 @WebServlet(name = "FindOrder")
 public class FindOrder extends Servlet {
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         renderTemplate("find-order",request,response);
     }
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException  {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException  {
+        if (request.getParameter("find") != null) {
+            processSearch(request);
+        }
+        renderTemplate("find-order",request,response);
+    }
+
+    private void processSearch(HttpServletRequest request) {
         HyggeDb hyggeDb = createDbConnection();
         Repository orderRepository = hyggeDb.getRepository("order");
         Repository frameRepository = hyggeDb.getRepository("frame");
         int orderId = Integer.parseInt(request.getParameter("orderId"));
         app.model.entity.Order order = (app.model.entity.Order) orderRepository.getById(orderId);
-        request.setAttribute("order",order);
-        request.setAttribute("frame",frameRepository.getById(order.getFrame()));
-        renderTemplate("find-order",request,response);
+        if (order == null) {
+            request.setAttribute("alert","No order with such id");
+        } else {
+            request.setAttribute("order", order);
+            request.setAttribute("frame", frameRepository.getById(order.getFrame()));
+        }
     }
 }

@@ -14,7 +14,7 @@ public class SelectionAssembler {
 
     public String assemble() {
         appendClause("SELECT ",",");
-        sql.append(" FROM ").append(selection.getTableName());
+        sql.append(" FROM ").append("`").append(selection.getTableName()).append("`");
         appendJoinClauses();
         appendClause(" WHERE ","");
         appendClause(" GROUP BY ",",");

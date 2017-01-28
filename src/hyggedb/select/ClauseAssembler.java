@@ -13,7 +13,7 @@ public abstract class ClauseAssembler {
     }
 
     protected void appendClause(String clause) {
-        if (!alias.isEmpty()) this.clause.append(alias).append(".");
+//        if (!alias.isEmpty()) this.clause.append(alias).append(".");
         this.clause.append(clause.trim());
     }
 

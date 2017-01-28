@@ -28,7 +28,7 @@ public class OrderRepository implements Repository {
     @Override
     public Order getById(int id) {
         Selection selection = getBaseSelection();
-        selection.where("id=?",id);
+        selection.where("`id`=?",id);
         return mapOrder(selector.getResult(selection));
     }
 
