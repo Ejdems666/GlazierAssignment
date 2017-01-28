@@ -33,6 +33,7 @@ public class Order extends Servlet {
             request.setAttribute("order",order);
             request.setAttribute("frame",frameRepository.getById(order.getFrame()));
             request.setAttribute("title","Order "+order.getId()+" processed");
+            request.setAttribute("alert",new BootstrapAlert("success","Order with id "+order.getId()+" was processed"));
             renderTemplate("order-processed",request,response);
         } catch (ParameterException e) {
             request.setAttribute("alert",new BootstrapAlert("error",e.getMessage()));
